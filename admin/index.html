@@ -299,7 +299,24 @@ h3{font-size:1rem;font-weight:600}
 .product-card{background:#fff;border-radius:16px;padding:32px;box-shadow:0 4px 16px rgba(0,0,0,0.08);text-align:center}
 .product-card .p-tag{display:inline-block;padding:3px 12px;background:#e0f5e9;color:#1a936f;border-radius:99px;font-size:.75rem;font-weight:600;margin-bottom:8px}
 .product-card .p-price{font-size:1.6rem;font-weight:700;color:#1a936f;margin:16px 0}
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);border-bottom:1px solid #e8e8e8;height:60px}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:100%}
+.nav-brand{font-weight:700;font-size:1.1rem;color:#1a1a2e;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-brand img{width:32px;height:32px;object-fit:contain}
+.nav-links{display:flex;gap:20px;list-style:none;align-items:center}
+.nav-links a{color:#666;font-weight:500;font-size:.88rem;text-decoration:none}
+.nav-cta{background:#1a936f;color:#fff!important;padding:6px 16px;border-radius:99px;font-weight:600;font-size:.82rem}
 </style></head><body>
+<nav class="nav"><div class="container">
+  <a href="#" class="nav-brand">${(d.images?.logo_img)?'<img src="'+esc(d.images.logo_img)+'" alt="logo">':''}Fun Connect</a>
+  <ul class="nav-links">
+    <li><a href="#">${esc(d.nav?.home||'首頁')}</a></li>
+    <li><a href="#">${esc(d.nav?.product||'產品')}</a></li>
+    <li><a href="#">${esc(d.nav?.cases||'案例')}</a></li>
+    <li><a href="#">${esc(d.nav?.about||'關於')}</a></li>
+    <li><a href="#" class="nav-cta">${esc(d.nav?.contact||'聯絡')}</a></li>
+  </ul>
+</div></nav>
 <div class="hero-section"><div class="container">
   ${(d.images?.logo_img)?'<img src="'+esc(d.images.logo_img)+'" style="width:40px;height:40px;object-fit:contain;margin-bottom:16px;" alt="logo">':''}
   <span class="tag">${esc(d.hero?.tag||'')}</span>
