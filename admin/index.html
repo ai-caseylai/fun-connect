@@ -176,11 +176,14 @@ const sections = [
   { id: 'footer', label: '頁尾' },
 ];
 
+function resolvePath(obj, path) {
+  return path.split('.').reduce((o, k) => (o && o[k]) ? o[k] : null, obj);
+}
 function getVal(section, key) {
-  return data['zh-TW'][section]?.[key] || '';
+  return resolvePath(data['zh-TW'], section)?.[key] || '';
 }
 function getValEn(section, key) {
-  return data['en'][section]?.[key] || '';
+  return resolvePath(data['en'], section)?.[key] || '';
 }
 
 function buildForm() {
@@ -230,8 +233,18 @@ function buildForm() {
 function renderFields(panel, section, keys, subId) {
   keys.forEach(key => {
     const realSub = (subId && subId !== '_') ? subId : null;
-    const valZh = realSub ? (data['zh-TW'][section]?.[realSub]?.[key] || '') : (data['zh-TW'][section]?.[key] || '');
-    const valEn = realSub ? (data['en'][section]?.[realSub]?.[key] || '') : (data['en'][section]?.[key] || '');
+    let valZh, valEn;
+    if (realSub) {
+      valZh = (data['zh-TW'][section]?.[realSub]?.[key] || '');
+      valEn = (data['en'][section]?.[realSub]?.[key] || '');
+    } else if (section.includes('.')) {
+      const parts = section.split('.');
+      valZh = (data['zh-TW'][parts[0]]?.[parts[1]]?.[key] || '');
+      valEn = (data['en'][parts[0]]?.[parts[1]]?.[key] || '');
+    } else {
+      valZh = (data['zh-TW'][section]?.[key] || '');
+      valEn = (data['en'][section]?.[key] || '');
+    }
     const label = (labels[section]||{})[key] || (labels[section.split('.')[1]]||{})[key] || key;
     const isLong = valZh.length > 50 || key.endsWith('d') || key.includes('desc') || key.includes('subtitle');
     const prefix = realSub ? `${section}.${realSub}.` : `${section}.`;
