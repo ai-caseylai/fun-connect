@@ -1,22 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8" /><title>CMS</title></head>
+<head><meta charset="utf-8" /><title>Fun Connect CMS</title></head>
 <body>
   <script src="https://cdn.jsdelivr.net/npm/netlify-cms@2.10.192/dist/cms.js"></script>
-  <script>
-    CMS.init({
-      config: {
-        backend: { name: 'test-repo' },
-        media_folder: '',
-        collections: [
-          { name: 'pages', label: 'Pages', files: [
-            { file: 'content/zh-TW.json', label: '中文', name: 'zh', fields: [
-              { label: 'Hero Headline', name: 'hero_headline', widget: 'string' }
-            ]}
-          ]}
-        ]
-      }
-    });
-  </script>
 </body>
 </html>

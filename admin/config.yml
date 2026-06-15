@@ -3,7 +3,6 @@ backend:
   repo: ai-caseylai/fun-connect
   branch: main
   api_root: https://decap-cms-oauth.techforliving.net
-  identity_url: https://decap-cms-oauth.techforliving.net/git-gateway/settings
 
 media_folder: ""
 public_folder: "/"
