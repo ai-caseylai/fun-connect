@@ -1,8 +1,9 @@
 backend:
-  name: github
+  name: git-gateway
   repo: ai-caseylai/fun-connect
   branch: main
-  base_url: https://decap-cms-oauth.techforliving.net
+  api_root: https://decap-cms-oauth.techforliving.net
+  identity_url: https://decap-cms-oauth.techforliving.net/git-gateway/settings
 
 media_folder: ""
 public_folder: "/"
