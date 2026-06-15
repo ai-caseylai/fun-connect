@@ -278,6 +278,11 @@ window.addEventListener('message', (e) => {
     previewLang = e.data.lang === 'en' ? 'en' : 'zh-TW';
     updatePreview();
   }
+  if (e.data?.type === 'switchTab') {
+    const tabId = e.data.tab;
+    const tab = document.querySelector(`.tab[onclick*="${tabId}"]`);
+    if (tab) tab.click();
+  }
 });
 function updatePreview() {
   clearTimeout(previewTimer);
@@ -348,34 +353,34 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
     <li><div class="lang-switch"><button class="lang-btn${isZh?' active':''}" onclick="parent.postMessage({type:'switchPreviewLang',lang:'zh'},'*')">中文</button><button class="lang-btn${isZh?'':' active'}" onclick="parent.postMessage({type:'switchPreviewLang',lang:'en'},'*')">EN</button></div></li>
   </ul>
 </div></nav>
-<div class="hero-section" id="s-top"><div class="container">
+<div class="hero-section" id="s-top" onclick="parent.postMessage({type:'switchTab',tab:'hero'},'*')" style="cursor:pointer"><div class="container">
   <span class="tag">${esc(d.hero?.tag||'')}</span>
   <h1>${esc(d.hero?.headline||'')}</h1>
   <p class="sub">${esc(d.hero?.subtitle||'')}</p>
   <div class="btn-group"><button class="btn btn-primary" onclick="document.getElementById('s-products').scrollIntoView({behavior:'smooth'})">${esc(d.hero?.cta1||'')}</button><button class="btn btn-outline" onclick="document.getElementById('s-features').scrollIntoView({behavior:'smooth'})">${esc(d.hero?.cta2||'')}</button></div>
   ${(d.images?.hero_img)?'<img src="'+esc(d.images.hero_img)+'" style="margin-top:28px;max-width:100%;max-height:300px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.12);" alt="hero">':''}
 </div></div>
-<div class="container"><div class="stat-row">
+<div class="container" onclick="parent.postMessage({type:'switchTab',tab:'stats'},'*')" style="cursor:pointer"><div class="stat-row">
   <div><div class="stat-num">120+</div><div class="stat-label">${esc(d.stats?.schools||'')}</div></div>
   <div><div class="stat-num">15,000+</div><div class="stat-label">${esc(d.stats?.students||'')}</div></div>
   <div><div class="stat-num">8+</div><div class="stat-label">${esc(d.stats?.kits||'')}</div></div>
   <div><div class="stat-num">98%</div><div class="stat-label">${esc(d.stats?.satisfaction||'')}</div></div>
 </div></div>
-<div class="section" id="s-features"><div class="container">
+<div class="section" id="s-features" onclick="parent.postMessage({type:'switchTab',tab:'features'},'*')" style="cursor:pointer"><div class="container">
   <h2>${esc(d.features?.title||'')}</h2>
   <p class="subtitle">${esc(d.features?.subtitle||'')}</p>
   <div class="card-grid">
     ${[1,2,3,4,5,6].map(i=>`<div class="card"><h3>${esc(d.features?.['f'+i+'t']||'')}</h3><p>${esc(d.features?.['f'+i+'d']||'')}</p></div>`).join('')}
   </div>
 </div></div>
-<div class="section" style="background:#fff" id="journey"><div class="container">
+<div class="section" style="background:#fff;cursor:pointer" id="journey" onclick="parent.postMessage({type:'switchTab',tab:'journey'},'*')"><div class="container">
   <h2>${esc(d.journey?.title||'')}</h2>
   <p class="subtitle">${esc(d.journey?.subtitle||'')}</p>
   <div class="steps">
     ${[1,2,3,4].map(i=>`<div><div class="step-num">${i}</div><h3>${esc(d.journey?.['s'+i+'t']||'')}</h3><p style="color:#888;font-size:.85rem">${esc(d.journey?.['s'+i+'d']||'')}</p></div>`).join('')}
   </div>
 </div></div>
-<div class="section" id="s-products"><div class="container">
+<div class="section" id="s-products" style="cursor:pointer" onclick="parent.postMessage({type:'switchTab',tab:'product_basic'},'*')"><div class="container">
   <h2>${esc(d.product?.title||'')}</h2>
   <p class="subtitle">${esc(d.product?.subtitle||'')}</p>
   <div class="product-tabs"><button class="product-tab active">${esc(d.product?.tab1||'')}</button><button class="product-tab">${esc(d.product?.tab2||'')}</button><button class="product-tab">${esc(d.product?.tab3||'')}</button></div>
@@ -388,7 +393,7 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
     <button class="btn btn-primary" onclick="document.getElementById('s-cta').scrollIntoView({behavior:'smooth'})">${esc(d.product?.cta||'')}</button>
   </div>
 </div></div>
-<div class="cta-banner" id="s-cta"><div class="container">
+<div class="cta-banner" id="s-cta" style="cursor:pointer" onclick="parent.postMessage({type:'switchTab',tab:'cta'},'*')"><div class="container">
   <h2>${esc(d.cta?.title||'')}</h2>
   <p style="opacity:.9;margin:12px auto 24px;max-width:400px;font-size:1.05rem">${esc(d.cta?.subtitle||'')}</p>
   <button class="btn" style="background:#fff;color:#1a936f;" onclick="document.getElementById('s-contact').scrollIntoView({behavior:'smooth'})">${esc(d.cta?.btn||'')}</button>
