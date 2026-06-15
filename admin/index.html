@@ -136,17 +136,18 @@ function buildForm() {
     ]},
     { id: 'faq', label: '常見問題', keys: ['title','q1','a1','q2','a2','q3','a3','q4','a4'] },
     { id: 'cases', label: '校園案例', sub: [
-      { id: 'c1', label: '案例1', keys: ['c1tag','c1t','c1d','c1n','c1r'] },
-      { id: 'c2', label: '案例2', keys: ['c2tag','c2t','c2d','c2n','c2r'] },
-      { id: 'c3', label: '案例3', keys: ['c3tag','c3t','c3d','c3n','c3r'] },
-      { id: 'c4', label: '案例4', keys: ['c4tag','c4t','c4d','c4n','c4r'] },
-      { id: 'c5', label: '案例5', keys: ['c5tag','c5t','c5d','c5n','c5r'] },
-      { id: 'c6', label: '案例6', keys: ['c6tag','c6t','c6d','c6n','c6r'] },
+      { id: '_', label: '標題', keys: ['title','subtitle'] },
+      { id: '_', label: '案例1', keys: ['c1tag','c1t','c1d','c1n','c1r'] },
+      { id: '_', label: '案例2', keys: ['c2tag','c2t','c2d','c2n','c2r'] },
+      { id: '_', label: '案例3', keys: ['c3tag','c3t','c3d','c3n','c3r'] },
+      { id: '_', label: '案例4', keys: ['c4tag','c4t','c4d','c4n','c4r'] },
+      { id: '_', label: '案例5', keys: ['c5tag','c5t','c5d','c5n','c5r'] },
+      { id: '_', label: '案例6', keys: ['c6tag','c6t','c6d','c6n','c6r'] },
     ]},
     { id: 'about', label: '關於我們', sub: [
-      { id: 'main', label: '主要', keys: ['title','subtitle','missionTitle','mission1','mission2'] },
-      { id: 'team', label: '團隊', keys: ['teamTitle','p1n','p1r','p2n','p2r','p3n','p3r','p4n','p4r'] },
-      { id: 'timeline', label: '大事記', keys: ['timelineTitle','t1t','t1d','t2t','t2d','t3t','t3d','t4t','t4d','t5t','t5d','t6t','t6d','ctaTitle','ctaSub','ctaBtn'] },
+      { id: '_', label: '主要', keys: ['title','subtitle','missionTitle','mission1','mission2'] },
+      { id: '_', label: '團隊', keys: ['teamTitle','p1n','p1r','p2n','p2r','p3n','p3r','p4n','p4r'] },
+      { id: '_', label: '大事記', keys: ['timelineTitle','t1t','t1d','t2t','t2d','t3t','t3d','t4t','t4d','t5t','t5d','t6t','t6d','ctaTitle','ctaSub','ctaBtn'] },
     ]},
     { id: 'contact', label: '聯絡資訊', keys: ['title','subtitle','email','phone','address','hours','eduTitle','eduDesc','social'] },
     { id: 'form', label: '聯絡表單', keys: ['name','namePh','nameErr','email','emailPh','emailErr','role','roleDefault','roleTeacher','roleAdmin','roleParent','roleDist','roleOther','interest','intDefault','intTrial','intQuote','intWorkshop','intPartner','intOther','msg','msgPh','msgErr','submit','sending','success'] },
@@ -220,13 +221,14 @@ function buildForm() {
 function renderFields(panel, section, keys, labelMap, subId) {
   keys.forEach(key => {
     const fld = document.createElement('div'); fld.className = 'fld';
-    const valZh = subId ? data['zh-TW'][section]?.[subId]?.[key] || '' : data['zh-TW'][section]?.[key] || '';
-    const valEn = subId ? data['en'][section]?.[subId]?.[key] || '' : data['en'][section]?.[key] || '';
+    const realSub = (subId && subId !== '_') ? subId : null;
+    const valZh = realSub ? data['zh-TW'][section]?.[realSub]?.[key] || '' : data['zh-TW'][section]?.[key] || '';
+    const valEn = realSub ? data['en'][section]?.[realSub]?.[key] || '' : data['en'][section]?.[key] || '';
     const label = labelMap[key] || key;
     const isLong = valZh.length > 60 || (labelMap[key] && labelMap[key].includes('文'));
     const tag = isLong ? 'textarea' : 'input';
     const typeAttr = isLong ? '' : 'type="text"';
-    const prefix = subId ? `${section}.${subId}.` : `${section}.`;
+    const prefix = realSub ? `${section}.${realSub}.` : `${section}.`;
     const zhTag = isLong
       ? `<textarea data-lang="zh" data-key="${prefix}${key}">${esc(valZh)}</textarea>`
       : `<input data-lang="zh" data-key="${prefix}${key}" value="${esc(valZh)}">`;
