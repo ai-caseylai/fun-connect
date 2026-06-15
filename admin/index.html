@@ -1,7 +1,119 @@
 <!DOCTYPE html>
-<html>
-<head><meta charset="utf-8" /><title>Fun Connect CMS</title></head>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fun Connect 內容管理</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, sans-serif; background: #f0f2f5; color: #1a1a2e; }
+header { background: #16213e; color: #fff; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+header h1 { font-size: 1.1rem; }
+.btn { padding: 8px 20px; border: 0; border-radius: 6px; cursor: pointer; font-size: 0.9rem; }
+.btn-primary { background: #0f3460; color: #fff; }
+.btn-danger { background: #e94560; color: #fff; }
+.btn-success { background: #1a936f; color: #fff; }
+.container { max-width: 800px; margin: 24px auto; padding: 0 16px; }
+.card { background: #fff; border-radius: 10px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.card h2 { font-size: 1rem; margin-bottom: 16px; color: #0f3460; border-bottom: 2px solid #0f3460; padding-bottom: 8px; }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 0.8rem; font-weight: 600; color: #555; margin-bottom: 4px; }
+.field input, .field textarea { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9rem; font-family: inherit; }
+.field textarea { min-height: 60px; resize: vertical; }
+.tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.tab { padding: 8px 16px; border: 0; border-radius: 6px; cursor: pointer; background: #ddd; font-size: 0.85rem; }
+.tab.active { background: #0f3460; color: #fff; }
+.status { padding: 10px 16px; border-radius: 6px; margin-bottom: 16px; display: none; }
+.status.success { background: #d4edda; color: #155724; display: block; }
+.status.error { background: #f8d7da; color: #721c24; display: block; }
+</style>
+</head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/netlify-cms@2.10.192/dist/cms.js"></script>
+<header>
+  <h1>Fun Connect 內容管理</h1>
+  <div>
+    <button class="btn btn-primary" onclick="load()">載入內容</button>
+    <button class="btn btn-success" onclick="save()">儲存所有變更</button>
+  </div>
+</header>
+<div class="container">
+  <div id="status" class="status"></div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('zh')">中文</button>
+    <button class="tab" onclick="switchTab('en')">English</button>
+  </div>
+  <form id="form"></form>
+</div>
+<script>
+const API = 'https://decap-cms-oauth.techforliving.net';
+let currentLang = 'zh-TW';
+let sha = {};
+
+async function api(method, file, body) {
+  const res = await fetch(`${API}/${file}`, {
+    method, headers: { 'Content-Type': 'application/json' },
+    body: body ? JSON.stringify({ content: JSON.stringify(body, null, 2), sha: sha[file], message: 'Update via CMS', branch: 'main' }) : undefined
+  });
+  return res.json();
+}
+
+function msg(text, isError) {
+  const s = document.getElementById('status');
+  s.textContent = text; s.className = 'status ' + (isError ? 'error' : 'success');
+  if (!isError) setTimeout(() => s.className = 'status', 3000);
+}
+
+async function load() {
+  try {
+    const data = await api('GET', 'content/zh-TW.json');
+    if (data.sha) {
+      sha['content/zh-TW.json'] = data.sha;
+      document.getElementById('zhData').value = JSON.stringify(JSON.parse(data.content), null, 2);
+    }
+    const enData = await api('GET', 'content/en.json');
+    if (enData.sha) {
+      sha['content/en.json'] = enData.sha;
+      document.getElementById('enData').value = JSON.stringify(JSON.parse(enData.content), null, 2);
+    }
+    msg('內容已載入 ✓');
+  } catch(e) { msg('載入失敗: ' + e.message, true); }
+}
+
+async function save() {
+  try {
+    const zhContent = JSON.parse(document.getElementById('zhData').value);
+    const enContent = JSON.parse(document.getElementById('enData').value);
+    await api('PUT', 'content/zh-TW.json', zhContent);
+    await api('PUT', 'content/en.json', enContent);
+    msg('已儲存到 GitHub！網站會在下次部署後更新 ✓');
+  } catch(e) { msg('儲存失敗: ' + e.message, true); }
+}
+
+function switchTab(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', (lang==='zh'&&i===0)||(lang==='en'&&i===1)));
+  document.getElementById('zhPanel').style.display = lang === 'zh' ? 'block' : 'none';
+  document.getElementById('enPanel').style.display = lang === 'en' ? 'block' : 'none';
+}
+
+document.getElementById('form').innerHTML = `
+  <div id="zhPanel">
+    <div class="card"><h2>繁體中文內容 (zh-TW.json)</h2>
+      <div class="field"><label>直接編輯 JSON — hero, stats, features 等所有欄位</label>
+        <textarea id="zhData" style="min-height:500px;font-family:monospace;font-size:0.8rem;"></textarea>
+      </div>
+    </div>
+  </div>
+  <div id="enPanel" style="display:none">
+    <div class="card"><h2>English Content (en.json)</h2>
+      <div class="field"><label>Edit JSON directly — all fields for hero, stats, features, etc.</label>
+        <textarea id="enData" style="min-height:500px;font-family:monospace;font-size:0.8rem;"></textarea>
+      </div>
+    </div>
+  </div>
+`;
+
+load();
+</script>
 </body>
 </html>
