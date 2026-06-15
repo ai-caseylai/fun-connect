@@ -6,13 +6,10 @@
   <title>Fun Connect — Content Manager</title>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@3.5.6/dist/decap-cms.js"></script>
+  <p style="font-family:sans-serif;padding:40px;text-align:center;color:#666;">Loading CMS...</p>
+  <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.14.1/dist/decap-cms.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      if (window.CMS) {
-        CMS.init();
-      }
-    });
+    if (window.CMS) { CMS.init(); }
   </script>
 </body>
 </html>
