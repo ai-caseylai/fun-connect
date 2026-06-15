@@ -280,7 +280,7 @@ function updatePreview() {
     const en = data['en'];
     const html = `<!DOCTYPE html><html lang="zh-TW"><head><base href="https://funconnect.techforliving.net/"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,sans-serif;color:#1a1a2e;background:#f8f9fb}
+body{font-family:-apple-system,sans-serif;color:#1a1a2e;background:#f8f9fb;scroll-behavior:smooth}
 h1{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:700;letter-spacing:-0.02em;line-height:1.2}
 h2{font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:650}
 h3{font-size:1rem;font-weight:600}
@@ -328,16 +328,16 @@ h3{font-size:1rem;font-weight:600}
 .nav-cta{background:#1a936f;color:#fff!important;padding:6px 16px;border-radius:99px;font-weight:600;font-size:.82rem}
 </style></head><body>
 <nav class="nav"><div class="container">
-  <a href="#" class="nav-brand">${(d.images?.logo_img)?'<img src="'+esc(d.images.logo_img)+'" alt="logo">':''}Fun Connect</a>
+  <a href="#top" class="nav-brand">${(d.images?.logo_img)?'<img src="'+esc(d.images.logo_img)+'" alt="logo">':''}Fun Connect</a>
   <ul class="nav-links">
-    <li><a href="#">${esc(d.nav?.home||'首頁')}</a></li>
-    <li><a href="#">${esc(d.nav?.product||'產品')}</a></li>
-    <li><a href="#">${esc(d.nav?.cases||'案例')}</a></li>
-    <li><a href="#">${esc(d.nav?.about||'關於')}</a></li>
-    <li><a href="#" class="nav-cta">${esc(d.nav?.contact||'聯絡')}</a></li>
+    <li><a href="#top">${esc(d.nav?.home||'首頁')}</a></li>
+    <li><a href="#products">${esc(d.nav?.product||'產品')}</a></li>
+    <li><a href="#features">${esc(d.nav?.cases||'案例')}</a></li>
+    <li><a href="#cta">${esc(d.nav?.about||'關於')}</a></li>
+    <li><a href="#cta" class="nav-cta">${esc(d.nav?.contact||'聯絡')}</a></li>
   </ul>
 </div></nav>
-<div class="hero-section"><div class="container">
+<div class="hero-section" id="top"><div class="container">
   ${(d.images?.logo_img)?'<img src="'+esc(d.images.logo_img)+'" style="width:40px;height:40px;object-fit:contain;margin-bottom:16px;" alt="logo">':''}
   <span class="tag">${esc(d.hero?.tag||'')}</span>
   <h1>${esc(d.hero?.headline||'')}</h1>
@@ -358,7 +358,7 @@ h3{font-size:1rem;font-weight:600}
     ${[1,2,3,4,5,6].map(i=>`<div class="card"><h3>${esc(d.features?.['f'+i+'t']||'')}</h3><p>${esc(d.features?.['f'+i+'d']||'')}</p></div>`).join('')}
   </div>
 </div></div>
-<div class="section" style="background:#fff"><div class="container">
+<div class="section" style="background:#fff" id="journey"><div class="container">
   <h2>${esc(d.journey?.title||'')}</h2>
   <p class="subtitle">${esc(d.journey?.subtitle||'')}</p>
   <div class="steps">
