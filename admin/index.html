@@ -328,16 +328,16 @@ h3{font-size:1rem;font-weight:600}
 .nav-cta{background:#1a936f;color:#fff!important;padding:6px 16px;border-radius:99px;font-weight:600;font-size:.82rem}
 </style></head><body>
 <nav class="nav"><div class="container">
-  <a href="#top" class="nav-brand">${(d.images?.logo_img)?'<img src="'+esc(d.images.logo_img)+'" alt="logo">':''}Fun Connect</a>
+  <a href="#s-top" class="nav-brand" onclick="document.getElementById('s-top').scrollIntoView({behavior:'smooth'});return false">${(d.images?.logo_img)?'<img src="'+esc(d.images.logo_img)+'" alt="logo">':''}Fun Connect</a>
   <ul class="nav-links">
-    <li><a href="#top">${esc(d.nav?.home||'首頁')}</a></li>
-    <li><a href="#products">${esc(d.nav?.product||'產品')}</a></li>
-    <li><a href="#features">${esc(d.nav?.cases||'案例')}</a></li>
-    <li><a href="#cta">${esc(d.nav?.about||'關於')}</a></li>
-    <li><a href="#cta" class="nav-cta">${esc(d.nav?.contact||'聯絡')}</a></li>
+    <li><a href="#s-top" onclick="document.getElementById('s-top').scrollIntoView({behavior:'smooth'});return false">${esc(d.nav?.home||'首頁')}</a></li>
+    <li><a href="#s-products" onclick="document.getElementById('s-products').scrollIntoView({behavior:'smooth'});return false">${esc(d.nav?.product||'產品')}</a></li>
+    <li><a href="#s-features" onclick="document.getElementById('s-features').scrollIntoView({behavior:'smooth'});return false">${esc(d.nav?.cases||'案例')}</a></li>
+    <li><a href="#s-cta" onclick="document.getElementById('s-cta').scrollIntoView({behavior:'smooth'});return false">${esc(d.nav?.about||'關於')}</a></li>
+    <li><a href="#s-cta" class="nav-cta" onclick="document.getElementById('s-cta').scrollIntoView({behavior:'smooth'});return false">${esc(d.nav?.contact||'聯絡')}</a></li>
   </ul>
 </div></nav>
-<div class="hero-section" id="top"><div class="container">
+<div class="hero-section" id="s-top"><div class="container">
   ${(d.images?.logo_img)?'<img src="'+esc(d.images.logo_img)+'" style="width:40px;height:40px;object-fit:contain;margin-bottom:16px;" alt="logo">':''}
   <span class="tag">${esc(d.hero?.tag||'')}</span>
   <h1>${esc(d.hero?.headline||'')}</h1>
@@ -351,7 +351,7 @@ h3{font-size:1rem;font-weight:600}
   <div><div class="stat-num">8+</div><div class="stat-label">${esc(d.stats?.kits||'')}</div></div>
   <div><div class="stat-num">98%</div><div class="stat-label">${esc(d.stats?.satisfaction||'')}</div></div>
 </div></div>
-<div class="section"><div class="container">
+<div class="section" id="s-features"><div class="container">
   <h2>${esc(d.features?.title||'')}</h2>
   <p class="subtitle">${esc(d.features?.subtitle||'')}</p>
   <div class="card-grid">
@@ -365,7 +365,7 @@ h3{font-size:1rem;font-weight:600}
     ${[1,2,3,4].map(i=>`<div><div class="step-num">${i}</div><h3>${esc(d.journey?.['s'+i+'t']||'')}</h3><p style="color:#888;font-size:.85rem">${esc(d.journey?.['s'+i+'d']||'')}</p></div>`).join('')}
   </div>
 </div></div>
-<div class="section"><div class="container">
+<div class="section" id="s-products"><div class="container">
   <h2>${esc(d.product?.title||'')}</h2>
   <p class="subtitle">${esc(d.product?.subtitle||'')}</p>
   <div class="product-tabs"><button class="product-tab active">${esc(d.product?.tab1||'')}</button><button class="product-tab">${esc(d.product?.tab2||'')}</button><button class="product-tab">${esc(d.product?.tab3||'')}</button></div>
@@ -378,7 +378,7 @@ h3{font-size:1rem;font-weight:600}
     <button class="btn btn-primary">${esc(d.product?.cta||'')}</button>
   </div>
 </div></div>
-<div class="cta-banner"><div class="container">
+<div class="cta-banner" id="s-cta"><div class="container">
   <h2>${esc(d.cta?.title||'')}</h2>
   <p style="opacity:.9;margin:12px auto 24px;max-width:400px;font-size:1.05rem">${esc(d.cta?.subtitle||'')}</p>
   <button class="btn" style="background:#fff;color:#1a936f;">${esc(d.cta?.btn||'')}</button>
