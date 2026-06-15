@@ -274,14 +274,28 @@ function collectData() {
 
 let previewTimer;
 window.addEventListener('message', (e) => {
+  console.log('CMS message received:', JSON.stringify(e.data));
   if (e.data?.type === 'switchPreviewLang') {
     previewLang = e.data.lang === 'en' ? 'en' : 'zh-TW';
     updatePreview();
   }
   if (e.data?.type === 'switchTab') {
     const tabId = e.data.tab;
-    const tab = document.querySelector(`.tab[onclick*="${tabId}"]`);
-    if (tab) tab.click();
+    const tabs = document.querySelectorAll('.tab');
+    console.log('switchTab looking for:', tabId, 'tabs:', [...tabs].map(t => ({text: t.textContent, onclick: !!t.onclick})));
+    for (const tab of tabs) {
+      if (tab.onclick && tab.onclick.toString().includes("'"+tabId+"'")) {
+        console.log('Found and clicking tab:', tab.textContent);
+        tab.click();
+        return;
+      }
+      if (tab.onclick && tab.onclick.toString().includes('"'+tabId+'"')) {
+        console.log('Found and clicking tab:', tab.textContent);
+        tab.click();
+        return;
+      }
+    }
+    console.log('switchTab: no match for', tabId);
   }
 });
 function updatePreview() {
