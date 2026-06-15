@@ -10,12 +10,63 @@
   <script>
     CMS.init({
       config: {
-        backend: {
-          name: 'github',
-          repo: 'ai-caseylai/fun-connect',
-          branch: 'main',
-          base_url: 'https://decap-cms-oauth.techforliving.net'
-        }
+        backend: { name: 'github', repo: 'ai-caseylai/fun-connect', branch: 'main', base_url: 'https://decap-cms-oauth.techforliving.net' },
+        media_folder: '',
+        public_folder: '/',
+        collections: [
+          {
+            name: 'content_zh',
+            label: '中文內容',
+            files: [
+              {
+                file: 'content/zh-TW.json',
+                label: '繁體中文',
+                name: 'zh',
+                fields: [
+                  { label: 'Hero', name: 'hero', widget: 'object', fields: [
+                    { label: '標籤', name: 'tag', widget: 'string' },
+                    { label: '標題', name: 'headline', widget: 'string' },
+                    { label: '副標題', name: 'subtitle', widget: 'text' },
+                    { label: '按鈕1', name: 'cta1', widget: 'string' },
+                    { label: '按鈕2', name: 'cta2', widget: 'string' }
+                  ]},
+                  { label: '統計', name: 'stats', widget: 'object', fields: [
+                    { label: '合作學校', name: 'schools', widget: 'string' },
+                    { label: '學生體驗過', name: 'students', widget: 'string' },
+                    { label: '主題套件', name: 'kits', widget: 'string' },
+                    { label: '教師滿意度', name: 'satisfaction', widget: 'string' }
+                  ]}
+                ]
+              }
+            ]
+          },
+          {
+            name: 'content_en',
+            label: 'English',
+            files: [
+              {
+                file: 'content/en.json',
+                label: 'English',
+                name: 'en',
+                fields: [
+                  { label: 'Hero', name: 'hero', widget: 'object', fields: [
+                    { label: 'Tag', name: 'tag', widget: 'string' },
+                    { label: 'Headline', name: 'headline', widget: 'string' },
+                    { label: 'Subtitle', name: 'subtitle', widget: 'text' },
+                    { label: 'CTA 1', name: 'cta1', widget: 'string' },
+                    { label: 'CTA 2', name: 'cta2', widget: 'string' }
+                  ]},
+                  { label: 'Stats', name: 'stats', widget: 'object', fields: [
+                    { label: 'Schools', name: 'schools', widget: 'string' },
+                    { label: 'Students', name: 'students', widget: 'string' },
+                    { label: 'Kits', name: 'kits', widget: 'string' },
+                    { label: 'Satisfaction', name: 'satisfaction', widget: 'string' }
+                  ]}
+                ]
+              }
+            ]
+          }
+        ]
       }
     });
   </script>
