@@ -353,7 +353,7 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
   <span class="tag">${esc(d.hero?.tag||'')}</span>
   <h1>${esc(d.hero?.headline||'')}</h1>
   <p class="sub">${esc(d.hero?.subtitle||'')}</p>
-  <div class="btn-group"><button class="btn btn-primary" onclick="document.getElementById('s-products').scrollIntoView({behavior:'smooth'})">${esc(d.hero?.cta1||'')}</button><button class="btn btn-outline" onclick="alert('預覽模式 - 此按鈕在真實網站會導向案例頁面')">${esc(d.hero?.cta2||'')}</button></div>
+  <div class="btn-group"><button class="btn btn-primary" onclick="document.getElementById('s-products').scrollIntoView({behavior:'smooth'})">${esc(d.hero?.cta1||'')}</button><button class="btn btn-outline" onclick="document.getElementById('s-features').scrollIntoView({behavior:'smooth'})">${esc(d.hero?.cta2||'')}</button></div>
   ${(d.images?.hero_img)?'<img src="'+esc(d.images.hero_img)+'" style="margin-top:28px;max-width:100%;max-height:300px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.12);" alt="hero">':''}
 </div></div>
 <div class="container"><div class="stat-row">
@@ -392,7 +392,25 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
 <div class="cta-banner" id="s-cta"><div class="container">
   <h2>${esc(d.cta?.title||'')}</h2>
   <p style="opacity:.9;margin:12px auto 24px;max-width:400px;font-size:1.05rem">${esc(d.cta?.subtitle||'')}</p>
-  <button class="btn" style="background:#fff;color:#1a936f;" onclick="alert('預覽模式 - 此按鈕在真實網站會開啟聯絡表單')">${esc(d.cta?.btn||'')}</button>
+  <button class="btn" style="background:#fff;color:#1a936f;" onclick="document.getElementById('s-contact').scrollIntoView({behavior:'smooth'})">${esc(d.cta?.btn||'')}</button>
+</div></div>
+<div class="section" id="s-contact"><div class="container">
+  <h2>${esc(d.contact?.title||'')}</h2>
+  <p class="subtitle">${esc(d.contact?.subtitle||'')}</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:700px;margin:0 auto;">
+    <div>
+      <div style="margin-bottom:12px"><label style="font-size:.8rem;font-weight:600;color:#555">${esc(d.form?.name||'')}</label><input style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:.85rem;margin-top:4px" placeholder="${esc(d.form?.namePh||'')}"></div>
+      <div style="margin-bottom:12px"><label style="font-size:.8rem;font-weight:600;color:#555">${esc(d.form?.email||'')}</label><input style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:.85rem;margin-top:4px" placeholder="${esc(d.form?.emailPh||'')}"></div>
+      <div style="margin-bottom:12px"><label style="font-size:.8rem;font-weight:600;color:#555">${esc(d.form?.msg||'')}</label><textarea style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:.85rem;min-height:80px;margin-top:4px" placeholder="${esc(d.form?.msgPh||'')}"></textarea></div>
+      <button class="btn btn-primary" style="width:100%" onclick="alert('預覽模式 - 表單僅供展示')">${esc(d.form?.submit||'')}</button>
+    </div>
+    <div style="background:#f8f9fb;border-radius:12px;padding:24px;">
+      <h3 style="margin-bottom:16px;font-size:.95rem">${esc(d.contact?.infoTitle||'聯絡資訊')}</h3>
+      <p style="font-size:.85rem;color:#666;margin-bottom:8px"><strong>${esc(d.contact?.emailLabel||'Email')}:</strong> ${esc(d.contact?.email||'')}</p>
+      <p style="font-size:.85rem;color:#666;margin-bottom:8px"><strong>${esc(d.contact?.telLabel||'電話')}:</strong> ${esc(d.contact?.phone||'')}</p>
+      <p style="font-size:.85rem;color:#666"><strong>${esc(d.contact?.addrLabel||'地址')}:</strong><br>${esc(d.contact?.address||'')}</p>
+    </div>
+  </div>
 </div></div>
 <footer class="footer"><div class="container">
   <div class="footer-grid">
