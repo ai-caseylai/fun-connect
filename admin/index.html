@@ -202,9 +202,10 @@ function buildForm() {
     } else if (sec.img) {
       sec.keys.forEach(key => {
         const fld = document.createElement('div'); fld.className = 'fld';
+        const imgVal = data['zh-TW'][sec.id]?.[key] || '';
         fld.innerHTML = `<label>${(labels[sec.id]||{})[key]||key}</label>
-          <input data-lang="zh" data-section="${sec.id}" data-key="${key}" value="${data['zh-TW'][sec.id]?.[key] || ''}" placeholder="圖片URL">
-          <div style="margin-top:4px;font-size:0.75rem;color:#888;">目前: ${data['zh-TW'][sec.id]?.[key] ? '<a href="'+data['zh-TW'][sec.id][key]+'" target="_blank">查看</a>' : '未設定'}</div>`;
+          <input data-lang="zh" data-key="${sec.id}.${key}" value="${esc(imgVal)}" placeholder="圖片URL">
+          <div style="margin-top:4px;font-size:0.75rem;color:#888;">目前: ${imgVal ? '<a href="'+esc(imgVal)+'" target="_blank">查看</a>' : '未設定'}</div>`;
         panel.appendChild(fld);
       });
     } else {
@@ -226,10 +227,16 @@ function renderFields(panel, section, keys, labelMap, subId) {
     const tag = isLong ? 'textarea' : 'input';
     const typeAttr = isLong ? '' : 'type="text"';
     const prefix = subId ? `${section}.${subId}.` : `${section}.`;
+    const zhTag = isLong
+      ? `<textarea data-lang="zh" data-key="${prefix}${key}">${esc(valZh)}</textarea>`
+      : `<input data-lang="zh" data-key="${prefix}${key}" value="${esc(valZh)}">`;
+    const enTag = isLong
+      ? `<textarea data-lang="en" data-key="${prefix}${key}">${esc(valEn)}</textarea>`
+      : `<input data-lang="en" data-key="${prefix}${key}" value="${esc(valEn)}">`;
     fld.innerHTML = `<label>${label}</label>
       <div class="row">
-        <div><span style="font-size:0.7rem;color:#888;">中文</span>${isLong ? '<textarea' : '<input'} data-lang="zh" data-key="${prefix}${key}" ${typeAttr}>${esc(valZh)}${isLong ? '</textarea>' : ''}</div>
-        <div><span style="font-size:0.7rem;color:#888;">English</span>${isLong ? '<textarea' : '<input'} data-lang="en" data-key="${prefix}${key}" ${typeAttr}>${esc(valEn)}${isLong ? '</textarea>' : ''}</div>
+        <div><span style="font-size:0.7rem;color:#888;">中文</span>${zhTag}</div>
+        <div><span style="font-size:0.7rem;color:#888;">English</span>${enTag}</div>
       </div>`;
     panel.appendChild(fld);
   });
