@@ -424,6 +424,34 @@
         footer: { tagline:'Empowering every child to feel technology with their hands and connect to the future through creativity. Designed in Taiwan, education first.', products:'Products', p1:'Basic Sensor Kit', p2:'Smart Home Kit', p3:'Competition Pack', resources:'Resources', r1:'Case Studies', r2:'Lesson Downloads', r3:'FAQ', contact:'Contact', c1:'Contact Form' }
       }
     };
+    (function loadCMSContent(){
+      var langs = ['zh-TW', 'en'];
+      var loaded = 0;
+      function merge(target, source) {
+        for (var key in source) {
+          if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+            if (!target[key]) target[key] = {};
+            merge(target[key], source[key]);
+          } else {
+            target[key] = source[key];
+          }
+        }
+      }
+      langs.forEach(function(lang) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'content/' + lang + '.json', true);
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            try { var data = JSON.parse(xhr.responseText); merge(translations[lang], data); } catch(e) {}
+          }
+          loaded++;
+          if (loaded === langs.length) { initApp(); }
+        };
+        xhr.onerror = function() { loaded++; if (loaded === langs.length) { initApp(); } };
+        xhr.send();
+      });
+    })();
+    function initApp() {
     var currentLang='zh-TW';
     function applyTranslations(lang){currentLang=lang;var d=translations[lang];if(!d)return;document.documentElement.lang=lang;document.title=lang==='en'?'Fun Connect — Connecting Young Hands to the Future':'Fun Connect 智趣通物聯 — 讓孩子與未來連結';document.querySelectorAll('[data-i18n]:not(textarea):not(input)').forEach(function(e){var k=e.getAttribute('data-i18n').split('.');var v=d;for(var i=0;i<k.length;i++){v=v[k[i]];if(v===undefined)break;}if(typeof v==='string')e.textContent=v;});document.querySelectorAll('[data-i18n-html]').forEach(function(e){var k=e.getAttribute('data-i18n-html').split('.');var v=d;for(var i=0;i<k.length;i++){v=v[k[i]];if(v===undefined)break;}if(typeof v==='string')e.innerHTML=v;});document.querySelectorAll('[data-i18n-placeholder]').forEach(function(e){var k=e.getAttribute('data-i18n-placeholder').split('.');var v=d;for(var i=0;i<k.length;i++){v=v[k[i]];if(v===undefined)break;}if(typeof v==='string')e.placeholder=v;});document.getElementById('btn-zh').classList.toggle('active',lang==='zh-TW');document.getElementById('btn-en').classList.toggle('active',lang==='en');}
     function setLang(l){applyTranslations(l);try{localStorage.setItem('funconnect:lang',l);}catch(_){}}
@@ -434,6 +462,7 @@
     function handleSubmit(e){e.preventDefault();var v=true;var na=document.getElementById('name'),em=document.getElementById('email'),ms=document.getElementById('message');document.querySelectorAll('.error-msg').forEach(function(el){el.style.display='none';});if(!na.value.trim()){document.getElementById('nameError').style.display='block';v=false;}if(!em.value.trim()||!em.checkValidity()){document.getElementById('emailError').style.display='block';v=false;}if(!ms.value.trim()){document.getElementById('msgError').style.display='block';v=false;}if(v){var btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent=translations[currentLang].form.sending;setTimeout(function(){document.getElementById('successMsg').style.display='block';document.getElementById('contactForm').reset();btn.disabled=false;btn.textContent=translations[currentLang].form.submit;},800);}return false;}
     function animateStats(){document.querySelectorAll('.stat-num[data-count]').forEach(function(el){var t=parseInt(el.getAttribute('data-count'),10);if(isNaN(t))return;var c=0,i=Math.ceil(t/40);var tm=setInterval(function(){c+=i;if(c>=t){c=t;clearInterval(tm);}if(t===98)el.textContent=c+'%';else if(t>=1000)el.textContent=c.toLocaleString()+'+';else el.textContent=c+'+';},30);});}
     animateStats();
+    }
   </script>
 </body>
 </html>
