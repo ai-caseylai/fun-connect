@@ -66,7 +66,7 @@ body { font-family: -apple-system, sans-serif; background: #1a1a2e; color: #eee;
 <script>
 const API = 'https://decap-cms-oauth.techforliving.net';
 const PASS = 'funconnect2024';
-let sha = {}, data = { 'zh-TW': {}, 'en': {} }, previewLang = 'zh-TW';
+let sha = {}, data = { 'zh-TW': {}, 'en': {} }, previewLang = 'zh-TW', tabMap = {};
 
 function login() {
   if (document.getElementById('pwd').value === PASS) {
@@ -194,6 +194,7 @@ function buildForm() {
     btn.className = 'tab' + (first ? ' active' : '');
     btn.textContent = sec.label;
     btn.onclick = () => switchTab(sec.id);
+    tabMap[sec.id] = btn;
     tabBar.appendChild(btn);
 
     const panel = document.createElement('div');
@@ -281,21 +282,15 @@ window.addEventListener('message', (e) => {
   }
   if (e.data?.type === 'switchTab') {
     const tabId = e.data.tab;
-    const tabs = document.querySelectorAll('.tab');
-    console.log('switchTab looking for:', tabId, 'tabs:', [...tabs].map(t => ({text: t.textContent, onclick: !!t.onclick})));
-    for (const tab of tabs) {
-      if (tab.onclick && tab.onclick.toString().includes("'"+tabId+"'")) {
-        console.log('Found and clicking tab:', tab.textContent);
-        tab.click();
-        return;
-      }
-      if (tab.onclick && tab.onclick.toString().includes('"'+tabId+'"')) {
-        console.log('Found and clicking tab:', tab.textContent);
-        tab.click();
-        return;
-      }
+    if (tabMap[tabId]) {
+      tabMap[tabId].click();
+      return;
     }
-    console.log('switchTab: no match for', tabId);
+    // Try alternate IDs
+    const aliases = { product_basic: 'product_tabs' };
+    const lookup = aliases[tabId] || tabId;
+    if (tabMap[lookup]) { tabMap[lookup].click(); return; }
+    console.log('switchTab: no tab found for', tabId, 'available:', Object.keys(tabMap));
   }
 });
 function updatePreview() {
@@ -394,7 +389,7 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
     ${[1,2,3,4].map(i=>`<div><div class="step-num">${i}</div><h3>${esc(d.journey?.['s'+i+'t']||'')}</h3><p style="color:#888;font-size:.85rem">${esc(d.journey?.['s'+i+'d']||'')}</p></div>`).join('')}
   </div>
 </div></div>
-<div class="section" id="s-products" style="cursor:pointer" onclick="parent.postMessage({type:'switchTab',tab:'product_basic'},'*')"><div class="container">
+<div class="section" id="s-products" style="cursor:pointer" onclick="console.log('click:product');parent.postMessage({type:'switchTab',tab:'product_basic'},'*')"><div class="container">
   <h2>${esc(d.product?.title||'')}</h2>
   <p class="subtitle">${esc(d.product?.subtitle||'')}</p>
   <div class="product-tabs"><button class="product-tab active">${esc(d.product?.tab1||'')}</button><button class="product-tab">${esc(d.product?.tab2||'')}</button><button class="product-tab">${esc(d.product?.tab3||'')}</button></div>
