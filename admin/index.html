@@ -395,6 +395,15 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
     ${[1,2,3,4,5,6].map(i=>`<div class="card"><h3>${esc(d.features?.['f'+i+'t']||'')}</h3><p>${esc(d.features?.['f'+i+'d']||'')}</p></div>`).join('')}
   </div>
 </div></div>
+<div class="section" style="cursor:pointer" id="s-testimonials" onclick="parent.postMessage({type:'switchTab',tab:'testimonials'},'*')"><div class="container">
+  <h2>${esc(d.testimonials?.title||'')}</h2>
+  <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+    ${['1','2','3'].map(i=>{
+      const t = d.testimonials||{};
+      return '<div class="card"><p style="font-style:italic;color:#555;margin-bottom:12px">"'+esc(t['t'+i+'q']||'')+'"</p><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:50%;background:#1a936f;color:#fff;display:grid;place-items:center;font-weight:700;font-size:.85rem">'+esc((t['t'+i+'n']||'')[0])+'</div><div><div style="font-weight:600;font-size:.85rem">'+esc(t['t'+i+'n']||'')+'</div><div style="font-size:.75rem;color:#888">'+esc(t['t'+i+'r']||'')+'</div></div></div></div>';
+    }).join('')}
+  </div>
+</div></div>
 <div class="section" style="background:#fff;cursor:pointer" id="journey" onclick="parent.postMessage({type:'switchTab',tab:'journey'},'*')"><div class="container">
   <h2>${esc(d.journey?.title||'')}</h2>
   <p class="subtitle">${esc(d.journey?.subtitle||'')}</p>
