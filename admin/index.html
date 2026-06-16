@@ -368,7 +368,7 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
     <li><a href="#s-top" onclick="document.getElementById('s-top').scrollIntoView({behavior:'smooth'});return false">${esc(d.nav?.home||'首頁')}</a></li>
     <li><a href="#s-products" onclick="document.getElementById('s-products').scrollIntoView({behavior:'smooth'});return false">${esc(d.nav?.product||'產品')}</a></li>
     <li><a href="#s-features" onclick="document.getElementById('s-features').scrollIntoView({behavior:'smooth'});return false">${esc(d.nav?.cases||'案例')}</a></li>
-    <li><a href="#s-cta" onclick="document.getElementById('s-cta').scrollIntoView({behavior:'smooth'});return false">${esc(d.nav?.about||'關於')}</a></li>
+    <li><a href="#s-about" onclick="document.getElementById('s-about').scrollIntoView({behavior:'smooth'});return false">${esc(d.nav?.about||'關於')}</a></li>
     <li><a href="#s-cta" class="nav-cta" onclick="document.getElementById('s-cta').scrollIntoView({behavior:'smooth'});return false">${esc(d.nav?.contact||'聯絡')}</a></li>
     <li><div class="lang-switch"><button class="lang-btn${isZh?' active':''}" onclick="parent.postMessage({type:'switchPreviewLang',lang:'zh'},'*')">中文</button><button class="lang-btn${isZh?'':' active'}" onclick="parent.postMessage({type:'switchPreviewLang',lang:'en'},'*')">EN</button></div></li>
   </ul>
@@ -460,7 +460,7 @@ ${(()=>{
   const cases = d.cases||{};
   return '<div class="section" style="background:#fff;cursor:pointer" onclick="parent.postMessage({type:\'switchTab\',tab:\'cases\'},\'*\')"><div class="container"><h2>'+esc(cases.title||'')+'</h2><p class="subtitle">'+esc(cases.subtitle||'')+'</p><div class="card-grid">'+['1','2','3'].map(i=>'<div class="card"><span style="font-size:.7rem;color:#1a936f;font-weight:600">'+esc(cases['c'+i+'tag']||'')+'</span><h3 style="margin:6px 0">'+esc(cases['c'+i+'t']||'')+'</h3><p>'+esc(cases['c'+i+'d']||'')+'</p><div style="margin-top:8px;font-size:.8rem;color:#888">'+esc(cases['c'+i+'n']||'')+' — '+esc(cases['c'+i+'r']||'')+'</div></div>').join('')+'</div></div></div>';
 })()}
-<div class="section" style="cursor:pointer" onclick="parent.postMessage({type:'switchTab',tab:'about'},'*')"><div class="container">
+<div class="section" id="s-about" style="cursor:pointer" onclick="parent.postMessage({type:'switchTab',tab:'about'},'*')"><div class="container">
   <h2>${esc(d.about?.title||'')}</h2>
   <p class="subtitle">${esc(d.about?.subtitle||'')}</p>
   <p style="font-size:.9rem;color:#555;line-height:1.7;margin-bottom:16px">${esc(d.about?.mission1||'')}</p>
