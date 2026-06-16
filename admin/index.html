@@ -405,8 +405,12 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
 <div class="section" id="s-products" style="cursor:pointer" onclick="console.log('click:product');parent.postMessage({type:'switchTab',tab:'product_basic'},'*')"><div class="container">
   <h2>${esc(d.product?.title||'')}</h2>
   <p class="subtitle">${esc(d.product?.subtitle||'')}</p>
-  <div class="product-tabs"><button class="product-tab active">${esc(d.product?.tab1||'')}</button><button class="product-tab">${esc(d.product?.tab2||'')}</button><button class="product-tab">${esc(d.product?.tab3||'')}</button></div>
-  <div class="product-card">
+  <div class="product-tabs">
+    <button class="product-tab active" id="ptab-basic" onclick="switchProdTab('basic');return false">${esc(d.product?.tab1||'')}</button>
+    <button class="product-tab" id="ptab-smart" onclick="switchProdTab('smart');return false">${esc(d.product?.tab2||'')}</button>
+    <button class="product-tab" id="ptab-comp" onclick="switchProdTab('comp');return false">${esc(d.product?.tab3||'')}</button>
+  </div>
+  <div class="product-card" id="prod-basic">
     ${(d.product?.basic?.img)?'<img src="'+esc(d.product.basic.img)+'" style="max-width:100%;max-height:200px;border-radius:10px;margin-bottom:16px;object-fit:cover;" alt="product">':''}
     <span class="p-tag">${esc(d.product?.basic?.tag||'')}</span>
     <h3>${esc(d.product?.basic?.name||'')}</h3>
@@ -414,6 +418,32 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
     <div class="p-price">${esc(d.product?.basic?.price||'')}</div>
     <button class="btn btn-primary" onclick="document.getElementById('s-cta').scrollIntoView({behavior:'smooth'})">${esc(d.product?.cta||'')}</button>
   </div>
+  <div class="product-card" id="prod-smart" style="display:none">
+    ${(d.product?.smart?.img)?'<img src="'+esc(d.product.smart.img)+'" style="max-width:100%;max-height:200px;border-radius:10px;margin-bottom:16px;object-fit:cover;" alt="product">':''}
+    <span class="p-tag">${esc(d.product?.smart?.tag||'')}</span>
+    <h3>${esc(d.product?.smart?.name||'')}</h3>
+    <p style="color:#666;margin:12px 0;font-size:.95rem">${esc(d.product?.smart?.desc||'')}</p>
+    <div class="p-price">${esc(d.product?.smart?.price||'')}</div>
+    <button class="btn btn-primary" onclick="document.getElementById('s-cta').scrollIntoView({behavior:'smooth'})">${esc(d.product?.cta||'')}</button>
+  </div>
+  <div class="product-card" id="prod-comp" style="display:none">
+    ${(d.product?.comp?.img)?'<img src="'+esc(d.product.comp.img)+'" style="max-width:100%;max-height:200px;border-radius:10px;margin-bottom:16px;object-fit:cover;" alt="product">':''}
+    <span class="p-tag">${esc(d.product?.comp?.tag||'')}</span>
+    <h3>${esc(d.product?.comp?.name||'')}</h3>
+    <p style="color:#666;margin:12px 0;font-size:.95rem">${esc(d.product?.comp?.desc||'')}</p>
+    <div class="p-price">${esc(d.product?.comp?.price||'')}</div>
+    <button class="btn btn-primary" onclick="document.getElementById('s-cta').scrollIntoView({behavior:'smooth'})">${esc(d.product?.cta||'')}</button>
+  </div>
+  <script>
+    function switchProdTab(kit) {
+      document.getElementById('prod-basic').style.display = kit==='basic'?'block':'none';
+      document.getElementById('prod-smart').style.display = kit==='smart'?'block':'none';
+      document.getElementById('prod-comp').style.display = kit==='comp'?'block':'none';
+      document.getElementById('ptab-basic').className = 'product-tab' + (kit==='basic'?' active':'');
+      document.getElementById('ptab-smart').className = 'product-tab' + (kit==='smart'?' active':'');
+      document.getElementById('ptab-comp').className = 'product-tab' + (kit==='comp'?' active':'');
+    }
+  </script>
 </div></div>
 <div class="cta-banner" id="s-cta" style="cursor:pointer" onclick="parent.postMessage({type:'switchTab',tab:'cta'},'*')"><div class="container">
   <h2>${esc(d.cta?.title||'')}</h2>
