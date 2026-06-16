@@ -445,6 +445,20 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
     }
   <\/script>
 </div></div>
+<div class="section"><div class="container">
+  <h2>${esc(d.faq?.title||'')}</h2>
+  ${['1','2','3','4'].map(i=>`<div style="margin-bottom:16px"><h3 style="font-size:.9rem;color:#1a936f;margin-bottom:4px;cursor:pointer" onclick="var a=this.nextElementSibling;a.style.display=a.style.display==='none'?'block':'none'">${esc(d.faq?.['q'+i]||'')}</h3><p style="color:#666;font-size:.85rem;display:none">${esc(d.faq?.['a'+i]||'')}</p></div>`).join('')}
+</div></div>
+${(()=>{
+  const cases = d.cases||{};
+  return '<div class="section" style="background:#fff"><div class="container"><h2>'+esc(cases.title||'')+'</h2><p class="subtitle">'+esc(cases.subtitle||'')+'</p><div class="card-grid">'+['1','2','3'].map(i=>'<div class="card"><span style="font-size:.7rem;color:#1a936f;font-weight:600">'+esc(cases['c'+i+'tag']||'')+'</span><h3 style="margin:6px 0">'+esc(cases['c'+i+'t']||'')+'</h3><p>'+esc(cases['c'+i+'d']||'')+'</p><div style="margin-top:8px;font-size:.8rem;color:#888">'+esc(cases['c'+i+'n']||'')+' — '+esc(cases['c'+i+'r']||'')+'</div></div>').join('')+'</div></div></div>';
+})()}
+<div class="section"><div class="container">
+  <h2>${esc(d.about?.title||'')}</h2>
+  <p class="subtitle">${esc(d.about?.subtitle||'')}</p>
+  <p style="font-size:.9rem;color:#555;line-height:1.7;margin-bottom:16px">${esc(d.about?.mission1||'')}</p>
+  <p style="font-size:.9rem;color:#555;line-height:1.7">${esc(d.about?.mission2||'')}</p>
+</div></div>
 <div class="cta-banner" id="s-cta" style="cursor:pointer" onclick="parent.postMessage({type:'switchTab',tab:'cta'},'*')"><div class="container">
   <h2>${esc(d.cta?.title||'')}</h2>
   <p style="opacity:.9;margin:12px auto 24px;max-width:400px;font-size:1.05rem">${esc(d.cta?.subtitle||'')}</p>
