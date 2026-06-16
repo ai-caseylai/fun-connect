@@ -434,7 +434,7 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
     <div class="p-price">${esc(d.product?.comp?.price||'')}</div>
     <button class="btn btn-primary" onclick="document.getElementById('s-cta').scrollIntoView({behavior:'smooth'})">${esc(d.product?.cta||'')}</button>
   </div>
-  <script>
+  <\/script><script>
     function switchProdTab(kit) {
       document.getElementById('prod-basic').style.display = kit==='basic'?'block':'none';
       document.getElementById('prod-smart').style.display = kit==='smart'?'block':'none';
@@ -443,7 +443,7 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
       document.getElementById('ptab-smart').className = 'product-tab' + (kit==='smart'?' active':'');
       document.getElementById('ptab-comp').className = 'product-tab' + (kit==='comp'?' active':'');
     }
-  </script>
+  <\/script>
 </div></div>
 <div class="cta-banner" id="s-cta" style="cursor:pointer" onclick="parent.postMessage({type:'switchTab',tab:'cta'},'*')"><div class="container">
   <h2>${esc(d.cta?.title||'')}</h2>
