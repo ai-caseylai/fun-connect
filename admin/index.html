@@ -112,8 +112,8 @@ async function loadAll() {
     for (const lang of ['zh-TW', 'en']) {
       const res = await fetch(`${API}/content/${lang}.json`);
       const d = await res.json();
-      if (d.sha) sha[lang] = d.sha;
-      data[lang] = JSON.parse(d.content);
+      // KV returns raw JSON, GitHub returns {content, sha}
+      data[lang] = d.content ? JSON.parse(d.content) : d;
     }
     buildForm();
     updatePreview();
@@ -123,14 +123,13 @@ async function loadAll() {
 
 async function saveAll() {
   try {
+    collectData();
     for (const lang of ['zh-TW', 'en']) {
       const content = JSON.stringify(data[lang], null, 2);
-      const body = JSON.stringify({ content, sha: sha[lang], message: 'Update via CMS', branch: 'main' });
-      const res = await fetch(`${API}/content/${lang}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body });
-      const d = await res.json();
-      if (d.content) sha[lang] = d.content.sha;
+      const res = await fetch(`${API}/content/${lang}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content }) });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
     }
-    status('已儲存到 GitHub ✓');
+    status('已儲存 ✓ 網站即時更新！');
   } catch(e) { status('儲存失敗: ' + e.message, true); }
 }
 
