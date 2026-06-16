@@ -41,7 +41,7 @@ body { font-family: -apple-system, sans-serif; background: #1a1a2e; color: #eee;
   <div class="login-box">
     <h2>Fun Connect 內容管理</h2>
     <input type="password" id="pwd" placeholder="請輸入管理密碼" style="width:100%;padding:12px;border:1px solid #444;border-radius:6px;font-size:1rem;background:#0a0a1e;color:#ddd;text-align:center;letter-spacing:4px" onkeydown="if(event.key==='Enter')login()">
-    <div style="display:flex;align-items:center;gap:6px;margin:8px 0;font-size:0.8rem;color:#aaa;"><input type="checkbox" id="rememberPwd" onchange="toggleRemember()"> 記住密碼</div>
+    <div style="display:flex;align-items:center;gap:6px;margin:8px 0;font-size:0.8rem;color:#aaa;white-space:nowrap;"><input type="checkbox" id="rememberPwd" onchange="toggleRemember()"> 記住密碼</div>
     <button class="btn btn-save" style="width:100%;padding:10px;" onclick="login()">登入</button>
     <div id="loginErr" style="color:#e94560;margin-top:10px;display:none;font-size:0.85rem;">密碼錯誤</div>
   </div>
