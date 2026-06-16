@@ -415,9 +415,9 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
   <h2>${esc(d.product?.title||'')}</h2>
   <p class="subtitle">${esc(d.product?.subtitle||'')}</p>
   <div class="product-tabs">
-    <button class="product-tab active" id="ptab-basic" onclick="switchProdTab('basic');return false">${esc(d.product?.tab1||'')}</button>
-    <button class="product-tab" id="ptab-smart" onclick="switchProdTab('smart');return false">${esc(d.product?.tab2||'')}</button>
-    <button class="product-tab" id="ptab-comp" onclick="switchProdTab('comp');return false">${esc(d.product?.tab3||'')}</button>
+    <button class="product-tab active" id="ptab-basic" onclick="switchProdTab('basic');parent.postMessage({type:'switchTab',tab:'product_basic'},'*');return false">${esc(d.product?.tab1||'')}</button>
+    <button class="product-tab" id="ptab-smart" onclick="switchProdTab('smart');parent.postMessage({type:'switchTab',tab:'product_smart'},'*');return false">${esc(d.product?.tab2||'')}</button>
+    <button class="product-tab" id="ptab-comp" onclick="switchProdTab('comp');parent.postMessage({type:'switchTab',tab:'product_comp'},'*');return false">${esc(d.product?.tab3||'')}</button>
   </div>
   <div class="product-card" id="prod-basic">
     ${(d.product?.basic?.img)?'<img src="'+esc(d.product.basic.img)+'" style="max-width:100%;max-height:200px;border-radius:10px;margin-bottom:16px;object-fit:cover;" alt="product">':''}
@@ -454,15 +454,15 @@ button:hover,.btn:hover{opacity:0.85;cursor:pointer}
     }
   <\/script>
 </div></div>
-<div class="section"><div class="container">
+<div class="section" style="cursor:pointer" onclick="parent.postMessage({type:'switchTab',tab:'faq'},'*')"><div class="container">
   <h2>${esc(d.faq?.title||'')}</h2>
   ${['1','2','3','4'].map(i=>`<div style="margin-bottom:16px"><h3 style="font-size:.9rem;color:#1a936f;margin-bottom:4px;cursor:pointer" onclick="var a=this.nextElementSibling;a.style.display=a.style.display==='none'?'block':'none'">${esc(d.faq?.['q'+i]||'')}</h3><p style="color:#666;font-size:.85rem;display:none">${esc(d.faq?.['a'+i]||'')}</p></div>`).join('')}
 </div></div>
 ${(()=>{
   const cases = d.cases||{};
-  return '<div class="section" style="background:#fff"><div class="container"><h2>'+esc(cases.title||'')+'</h2><p class="subtitle">'+esc(cases.subtitle||'')+'</p><div class="card-grid">'+['1','2','3'].map(i=>'<div class="card"><span style="font-size:.7rem;color:#1a936f;font-weight:600">'+esc(cases['c'+i+'tag']||'')+'</span><h3 style="margin:6px 0">'+esc(cases['c'+i+'t']||'')+'</h3><p>'+esc(cases['c'+i+'d']||'')+'</p><div style="margin-top:8px;font-size:.8rem;color:#888">'+esc(cases['c'+i+'n']||'')+' — '+esc(cases['c'+i+'r']||'')+'</div></div>').join('')+'</div></div></div>';
+  return '<div class="section" style="background:#fff;cursor:pointer" onclick="parent.postMessage({type:\'switchTab\',tab:\'cases\'},\'*\')"><div class="container"><h2>'+esc(cases.title||'')+'</h2><p class="subtitle">'+esc(cases.subtitle||'')+'</p><div class="card-grid">'+['1','2','3'].map(i=>'<div class="card"><span style="font-size:.7rem;color:#1a936f;font-weight:600">'+esc(cases['c'+i+'tag']||'')+'</span><h3 style="margin:6px 0">'+esc(cases['c'+i+'t']||'')+'</h3><p>'+esc(cases['c'+i+'d']||'')+'</p><div style="margin-top:8px;font-size:.8rem;color:#888">'+esc(cases['c'+i+'n']||'')+' — '+esc(cases['c'+i+'r']||'')+'</div></div>').join('')+'</div></div></div>';
 })()}
-<div class="section"><div class="container">
+<div class="section" style="cursor:pointer" onclick="parent.postMessage({type:'switchTab',tab:'about'},'*')"><div class="container">
   <h2>${esc(d.about?.title||'')}</h2>
   <p class="subtitle">${esc(d.about?.subtitle||'')}</p>
   <p style="font-size:.9rem;color:#555;line-height:1.7;margin-bottom:16px">${esc(d.about?.mission1||'')}</p>
@@ -473,7 +473,7 @@ ${(()=>{
   <p style="opacity:.9;margin:12px auto 24px;max-width:400px;font-size:1.05rem">${esc(d.cta?.subtitle||'')}</p>
   <button class="btn" style="background:#fff;color:#1a936f;" onclick="document.getElementById('s-contact').scrollIntoView({behavior:'smooth'})">${esc(d.cta?.btn||'')}</button>
 </div></div>
-<div class="section" id="s-contact"><div class="container">
+<div class="section" id="s-contact" style="cursor:pointer" onclick="parent.postMessage({type:'switchTab',tab:'contact'},'*')"><div class="container">
   <h2>${esc(d.contact?.title||'')}</h2>
   <p class="subtitle">${esc(d.contact?.subtitle||'')}</p>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:700px;margin:0 auto;">
@@ -491,7 +491,7 @@ ${(()=>{
     </div>
   </div>
 </div></div>
-<footer class="footer"><div class="container">
+<footer class="footer" style="cursor:pointer" onclick="parent.postMessage({type:'switchTab',tab:'footer'},'*')"><div class="container">
   <div class="footer-grid">
     <div><h4>Fun Connect</h4><p class="tagline">${esc(d.footer?.tagline||'')}</p></div>
     <div><h4>${esc(d.footer?.products||'')}</h4><ul><li>${esc(d.footer?.p1||'')}</li><li>${esc(d.footer?.p2||'')}</li><li>${esc(d.footer?.p3||'')}</li></ul></div>
